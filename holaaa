@@ -1,0 +1,29 @@
+import time
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
+
+
+a = Service(ChromeDriverManager().install())
+opc = Options()
+opc.add_argument("--window-size=700,620")
+
+
+navegador = webdriver.Chrome(service=a, options=opc)
+navegador.get("https://www.amazon.com.mx/")
+
+product = input("Nintendo switch oled")
+
+search = navegador.find_element(By.NAME, "field-keywords")
+search.send_keys(product)
+
+# enter
+search.send_keys(Keys.RETURN)
+
+time.sleep(25)
+navegador.save_screenshot("captura_producto.png")
+
+navegador.quit()
